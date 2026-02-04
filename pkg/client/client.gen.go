@@ -794,7 +794,7 @@ type ClientWithResponsesInterface interface {
 type ListCatalogItemsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ListCatalogItemsResponse
+	JSON200      *CatalogItemList
 	JSON401      *Unauthorized
 	JSON403      *Forbidden
 	JSON500      *InternalServerError
@@ -946,7 +946,7 @@ func (r GetHealthResponse) StatusCode() int {
 type ListServiceTypesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ListServiceTypesResponse
+	JSON200      *ServiceTypeList
 	JSON400      *BadRequest
 	JSON401      *Unauthorized
 	JSON403      *Forbidden
@@ -1142,7 +1142,7 @@ func ParseListCatalogItemsResponse(rsp *http.Response) (*ListCatalogItemsRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ListCatalogItemsResponse
+		var dest CatalogItemList
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1438,7 +1438,7 @@ func ParseListServiceTypesResponse(rsp *http.Response) (*ListServiceTypesRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ListServiceTypesResponse
+		var dest ServiceTypeList
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
