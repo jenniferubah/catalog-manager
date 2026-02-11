@@ -47,7 +47,7 @@ generate-client:
 
 generate-api: generate-types generate-spec generate-server generate-client generate-service-types
 
-check-generate-api: generate-api generate-service-types
+check-generate-api: generate-api
 	git diff --exit-code api/ internal/api/server/ pkg/client/ || \
 		(echo "Generated files out of sync. Run 'make generate-api'." && exit 1)
 
